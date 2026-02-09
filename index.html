@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Asset Tag QR Lookup</title>
+  <link rel="stylesheet" href="./styles.css" />
+
+  <!-- QR scanner -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.10/html5-qrcode.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+
+<body>
+  <header class="wrap">
+    <h1>Asset Tag QR Lookup</h1>
+    <p class="muted">Scan a QR code (encoding the FULL UNIQUE ASSET TAG) or search manually.</p>
+  </header>
+
+  <main class="wrap grid">
+    <section class="card">
+      <h2>Scan</h2>
+
+      <div class="row">
+        <label class="label" for="cameraSelect">Camera</label>
+        <select id="cameraSelect"></select>
+      </div>
+
+      <div class="row actions">
+        <button id="startBtn" class="primary">Start Scan</button>
+        <button id="stopBtn" class="secondary" disabled>Stop</button>
+      </div>
+
+      <div id="qr-reader" class="reader"></div>
+
+      <div class="row">
+        <div class="label">Scanned code</div>
+        <div id="scannedText" class="mono box">—</div>
+      </div>
+
+      <div class="row">
+        <label class="label" for="manualInput">Manual search</label>
+        <input id="manualInput" class="input mono" placeholder="Paste FULL UNIQUE ASSET TAG here..." />
+      </div>
+
+      <div class="row actions">
+        <button id="searchBtn" class="primary">Search</button>
+        <button id="clearBtn" class="secondary">Clear</button>
+      </div>
+
+      <p id="status" class="muted small">Loading data…</p>
+    </section>
+
+    <section class="card">
+      <h2>Result</h2>
+
+      <div id="noResult" class="muted">
+        No record loaded yet. Scan a code or search.
+      </div>
+
+      <div id="result" class="hidden">
+        <div class="row">
+          <div class="label">FULL UNIQUE ASSET TAG</div>
+          <div id="tagValue" class="mono box"></div>
+        </div>
+
+        <table class="table" id="resultTable">
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap muted small">
+    <div>Tip: QR codes should encode the exact text of <span class="mono">FULL UNIQUE ASSET TAG</span>.</div>
+  </footer>
+</body>
+</html>
