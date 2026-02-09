@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f17" />
+  <title>Asset Tag Lookup (Image Scan)</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.10/html5-qrcode.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+
+<body>
+  <header class="wrap">
+    <h1>Asset Tag Lookup</h1>
+    <p class="muted">
+      Option 2: <b>Scan from Image</b> (no live camera stream). Take a photo of the QR code, then upload it here.
+    </p>
+  </header>
+
+  <main class="wrap grid">
+    <section class="card">
+      <h2>Scan from Image</h2>
+
+      <div class="row actions">
+        <button id="uploadBtn" class="primary">Upload QR Image</button>
+        <button id="openCameraBtn" class="secondary">Take Photo</button>
+      </div>
+
+      <input id="fileInput" type="file" accept="image/*" class="hidden" />
+      <input id="captureInput" type="file" accept="image/*" capture="environment" class="hidden" />
+
+      <div class="row">
+        <div class="label">Decoded text</div>
+        <div id="decodedText" class="mono box">—</div>
+      </div>
+
+      <div class="row">
+        <label class="label" for="manualInput">Manual search</label>
+        <input id="manualInput" class="input mono" placeholder="Paste / type FULL UNIQUE ASSET TAG..." />
+      </div>
+
+      <div class="row actions">
+        <button id="searchBtn" class="secondary">Search</button>
+        <button id="clearBtn" class="secondary">Clear</button>
+      </div>
+
+      <p id="status" class="muted small">Loading data…</p>
+
+      <details class="help">
+        <summary>Troubleshooting</summary>
+        <ul>
+          <li>If decoding fails, use a clearer photo (good lighting, in focus).</li>
+          <li>Try cropping closer to the QR code (or re-take the photo).</li>
+          <li>If QR encodes something other than <span class="mono">FULL UNIQUE ASSET TAG</span>, adjust lookup in <span class="mono">app.js</span>.</li>
+        </ul>
+      </details>
+
+      <div id="qr-sandbox" class="hidden"></div>
+    </section>
+
+    <section class="card">
+      <h2>Result</h2>
+
+      <div id="noResult" class="muted">
+        No record loaded yet. Upload an image or search.
+      </div>
+
+      <div id="result" class="hidden">
+        <div class="row">
+          <div class="label">FULL UNIQUE ASSET TAG</div>
+          <div id="tagValue" class="mono box"></div>
+        </div>
+
+        <div class="row">
+          <div class="label">QR (generated)</div>
+          <div class="box">
+            <img id="qrPreview" alt="QR code" />
+          </div>
+        </div>
+
+        <table class="table" id="resultTable"><tbody></tbody></table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap muted small">
+    <div>Data source: <span class="mono">data.json</span> (replace it to update records).</div>
+  </footer>
+</body>
+</html>
