@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f17" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Asset Tag QR Lookup</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.10/html5-qrcode.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="wrap">
+    <h1>Asset Tag QR Lookup</h1>
+    <p class="muted">
+      Mobile-first. Use the GitHub Pages <span class="mono">https://</span> link (🔒). If camera fails, use Image Upload or Manual Search.
+    </p>
+  </header>
+
+  <main class="wrap grid">
+    <section class="card">
+      <h2>Scan (Mobile)</h2>
+
+      <div id="httpsWarning" class="callout hidden">
+        <b>Camera needs HTTPS.</b>
+        <div class="small">Open via GitHub Pages (<span class="mono">https://…github.io/…</span>), not <span class="mono">file://</span> or <span class="mono">http://</span>.</div>
+      </div>
+
+      <div id="iosHint" class="callout hidden">
+        <b>iPhone tip:</b>
+        <div class="small">Use Safari (not in-app browser). If permission was blocked before, go to <span class="mono">Settings → Safari → Camera</span> and allow, then reload.</div>
+      </div>
+
+      <div class="row">
+        <label class="label" for="cameraSelect">Camera</label>
+        <select id="cameraSelect"></select>
+      </div>
+
+      <div class="row actions">
+        <button id="permBtn" class="secondary">Request Permission</button>
+        <button id="startBtn" class="primary">Start Scan</button>
+      </div>
+
+      <div class="row actions">
+        <button id="stopBtn" class="secondary" disabled>Stop</button>
+        <button id="torchBtn" class="secondary" disabled>Torch</button>
+      </div>
+
+      <div id="qr-reader" class="reader"></div>
+
+      <div class="row">
+        <div class="label">Scanned</div>
+        <div id="scannedText" class="mono box">—</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Fallback (works on mobile)</h3>
+      <div class="row actions">
+        <button id="uploadBtn" class="secondary">Scan from Image</button>
+        <button id="manualFocusBtn" class="secondary">Manual Search</button>
+      </div>
+      <input id="fileInput" type="file" accept="image/*" capture="environment" class="hidden" />
+
+      <div class="row">
+        <label class="label" for="manualInput">FULL UNIQUE ASSET TAG</label>
+        <input id="manualInput" class="input mono" placeholder="Paste / type tag..." />
+      </div>
+
+      <div class="row actions">
+        <button id="searchBtn" class="primary">Search</button>
+        <button id="clearBtn" class="secondary">Clear</button>
+      </div>
+
+      <p id="status" class="muted small">Loading data…</p>
+    </section>
+
+    <section class="card">
+      <h2>Result</h2>
+
+      <div id="noResult" class="muted">
+        No record loaded yet. Scan a code or search.
+      </div>
+
+      <div id="result" class="hidden">
+        <div class="row">
+          <div class="label">FULL UNIQUE ASSET TAG</div>
+          <div id="tagValue" class="mono box"></div>
+        </div>
+
+        <div class="row">
+          <div class="label">QR (generated)</div>
+          <div class="box">
+            <img id="qrPreview" alt="QR code" />
+          </div>
+        </div>
+
+        <table class="table" id="resultTable"><tbody></tbody></table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap muted small">
+    <div>Data source: <span class="mono">data.json</span> (replace it to update records).</div>
+  </footer>
+</body>
+</html>
