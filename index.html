@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Asset Tag QR Lookup</title>
+  <link rel="stylesheet" href="./styles.css" />
+
+  <!-- QR scanner -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.10/html5-qrcode.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+
+<body>
+  <header class="wrap">
+    <h1>Asset Tag QR Lookup</h1>
+    <p class="muted">
+      Scan a QR code (it must encode the <span class="mono">FULL UNIQUE ASSET TAG</span>) or search manually.
+    </p>
+  </header>
+
+  <main class="wrap grid">
+    <section class="card">
+      <h2>Scan</h2>
+
+      <div id="httpsWarning" class="callout hidden">
+        <b>Camera needs HTTPS.</b>
+        <div class="small">Open this app via GitHub Pages (<span class="mono">https://…github.io/…</span>), not <span class="mono">file://</span> or <span class="mono">http://</span>.</div>
+      </div>
+
+      <div id="browserWarning" class="callout hidden">
+        <b>In-app browser detected.</b>
+        <div class="small">If camera permission doesn't appear, open this link in Safari/Chrome (not WhatsApp/Teams in-app browser).</div>
+      </div>
+
+      <div class="row">
+        <label class="label" for="cameraSelect">Camera</label>
+        <select id="cameraSelect"></select>
+      </div>
+
+      <div class="row actions">
+        <button id="permBtn" class="secondary">Request Camera Permission</button>
+        <button id="startBtn" class="primary">Start Scan</button>
+      </div>
+
+      <div class="row actions">
+        <button id="stopBtn" class="secondary" disabled>Stop</button>
+        <button id="testBtn" class="secondary">Test Lookup (Paste)</button>
+      </div>
+
+      <div id="qr-reader" class="reader"></div>
+
+      <div class="row">
+        <div class="label">Scanned code</div>
+        <div id="scannedText" class="mono box">—</div>
+      </div>
+
+      <div class="row">
+        <label class="label" for="manualInput">Manual search</label>
+        <input id="manualInput" class="input mono" placeholder="Paste FULL UNIQUE ASSET TAG here..." />
+      </div>
+
+      <div class="row actions">
+        <button id="searchBtn" class="primary">Search</button>
+        <button id="clearBtn" class="secondary">Clear</button>
+      </div>
+
+      <p id="status" class="muted small">Loading data…</p>
+
+      <details class="help">
+        <summary>Camera troubleshooting</summary>
+        <ul>
+          <li><b>Use the GitHub Pages HTTPS link</b> (lock icon in address bar).</li>
+          <li>Allow camera permission in your browser settings.</li>
+          <li>Avoid in-app browsers; open in Safari/Chrome.</li>
+          <li>If permission was blocked previously, reset site permissions and reload.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2>Result</h2>
+
+      <div id="noResult" class="muted">
+        No record loaded yet. Scan a code or search.
+      </div>
+
+      <div id="result" class="hidden">
+        <div class="row">
+          <div class="label">FULL UNIQUE ASSET TAG</div>
+          <div id="tagValue" class="mono box"></div>
+        </div>
+
+        <div class="row">
+          <div class="label">QR CODE (generated)</div>
+          <div class="box">
+            <img id="qrPreview" alt="QR code" />
+          </div>
+        </div>
+
+        <table class="table" id="resultTable">
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap muted small">
+    <div>Data source: <span class="mono">data.json</span> (replace it to update records).</div>
+  </footer>
+</body>
+</html>
